@@ -1,7 +1,5 @@
 ﻿namespace FwUtil.Core.Exceptions;
 
-using System;
-
 public class FirewallRuleAlreadyExists : Exception
 {
     public FirewallRuleAlreadyExists()

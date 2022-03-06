@@ -4,17 +4,12 @@ namespace FwUtil.Core.Classes;
 
 public class NetFwPolicy2 : INetFwPolicy2
 {
-    private int _currentProfileTypes;
-    private INetFwRules _rules;
-    private INetFwServiceRestriction _serviceRestriction;
-    private NET_FW_MODIFY_STATE_ _localPolicyModifyState;
-
-    public void EnableRuleGroup(int profileTypesBitmask, string @group, bool enable)
+    public void EnableRuleGroup(int profileTypesBitmask, string group, bool enable)
     {
         throw new NotImplementedException();
     }
 
-    public bool IsRuleGroupEnabled(int profileTypesBitmask, string @group)
+    public bool IsRuleGroupEnabled(int profileTypesBitmask, string group)
     {
         throw new NotImplementedException();
     }
@@ -24,15 +19,15 @@ public class NetFwPolicy2 : INetFwPolicy2
         throw new NotImplementedException();
     }
 
-    public int CurrentProfileTypes => _currentProfileTypes;
+    public int CurrentProfileTypes { get; }
 
-    public INetFwRules Rules => _rules;
+    public INetFwRules Rules { get; }
 
-    public INetFwServiceRestriction ServiceRestriction => _serviceRestriction;
+    public INetFwServiceRestriction ServiceRestriction { get; }
 
-    public NET_FW_MODIFY_STATE_ LocalPolicyModifyState => _localPolicyModifyState;
+    public NET_FW_MODIFY_STATE_ LocalPolicyModifyState { get; }
 
-    public bool get_IsRuleGroupCurrentlyEnabled(string @group)
+    public bool get_IsRuleGroupCurrentlyEnabled(string group)
     {
         throw new NotImplementedException();
     }

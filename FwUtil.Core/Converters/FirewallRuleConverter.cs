@@ -27,8 +27,10 @@ public static class FirewallRuleConverter
                 FirewallRule.Protocols.Any => (int) NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_ANY,
                 _ => throw new ArgumentOutOfRangeException()
             },
-            LocalPorts = string.IsNullOrEmpty(firewallRule.LocalPort) ? null : firewallRule.LocalPort,
-            RemotePorts = string.IsNullOrEmpty(firewallRule.RemotePort) ? null : firewallRule.RemotePort,
+            LocalPorts = string.IsNullOrEmpty(firewallRule.LocalPorts) ? null : firewallRule.LocalPorts,
+            RemoteAddresses = string.IsNullOrEmpty(firewallRule.RemoteAddresses) ? null : firewallRule.RemoteAddresses,
+            RemotePorts = string.IsNullOrEmpty(firewallRule.RemotePorts) ? null : firewallRule.RemotePorts,
+            LocalAddresses = string.IsNullOrEmpty(firewallRule.LocalAddresses) ? null : firewallRule.LocalAddresses,
             Action = firewallRule.Action switch
             {
                 FirewallRule.Actions.Allow => NET_FW_ACTION_.NET_FW_ACTION_ALLOW,
@@ -50,8 +52,10 @@ public static class FirewallRuleConverter
             Enabled = rule.Enabled,
             Description = rule.Description,
             Grouping = rule.Grouping,
-            LocalPort = rule.LocalPorts,
-            RemotePort = rule.RemotePorts,
+            LocalPorts = rule.LocalPorts,
+            LocalAddresses = rule.LocalAddresses,
+            RemotePorts = rule.RemotePorts,
+            RemoteAddresses = rule.RemoteAddresses,
             Action = rule.Action switch
             {
                 NET_FW_ACTION_.NET_FW_ACTION_BLOCK => FirewallRule.Actions.Block,
@@ -74,7 +78,7 @@ public static class FirewallRuleConverter
                 _ => FirewallRule.Protocols.Unknown
             },
             Program = null,
-            InterfaceType = FirewallRule.InterfaceTypes.Any,
+            InterfaceType = FirewallRule.InterfaceTypes.Any
         };
     }
 }

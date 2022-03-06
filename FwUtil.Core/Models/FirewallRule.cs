@@ -17,7 +17,7 @@ public class FirewallRule
 
     public enum InterfaceTypes
     {
-        Any,
+        Any
     }
 
     public enum Protocols
@@ -29,14 +29,16 @@ public class FirewallRule
     }
 
     public bool Enabled { get; set; }
-    public string? DisplayName { get; set; }
-    public string? Description { get; set; }
-    public string? LocalPort { get; set; }
-    public string? RemotePort { get; set; }
+    public string DisplayName { get; set; }
+    public string Description { get; set; }
+    public string LocalPorts { get; set; }
+    public string LocalAddresses { get; set; }
+    public string RemotePorts { get; set; }
+    public string RemoteAddresses { get; set; }
     public Actions Action { get; set; }
     public Directions Direction { get; set; }
     public Protocols Protocol { get; set; }
-    public string? Program { get; set; }
-    public string? Grouping { get; set; }
+    public string Program { get; set; }
+    public string Grouping { get; set; } = "FWUtil";
     public InterfaceTypes InterfaceType { get; set; }
 }
