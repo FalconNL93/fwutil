@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FwUtil.Cli.Classes;
+using FwUtil.Cli.Configurations;
+using FwUtil.Cli.Options;
+using FwUtil.Cli.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace FwUtil.Cli;
@@ -10,38 +14,34 @@ public static class Program
         App? app = null;
         var services = new ServiceCollection();
         ConfigureServices(services);
-        var serviceProvider = services.BuildServiceProvider();
 
         try
         {
+            var serviceProvider = services.BuildServiceProvider();
             app = serviceProvider.GetService<App>();
         }
         catch (Exception e)
         {
-            Console.WriteLine("Unable to start FWUtil due to an error:\n{0}", e.Message);
+            Console.WriteLine("Error while initializing FwUtil:\n{0}", e.Message);
             Environment.Exit(1);
         }
 
         if (app == null) throw new Exception("Could not resolve app");
 
-        app.Run(args);
+        app.Run();
     }
 
     private static void ConfigureServices(IServiceCollection services)
     {
-        ConfigureLogging();
-        services.AddLogging(builder => { builder.AddSerilog(dispose: true); });
+        Logging.Configure();
+        services.AddLogging(builder =>
+        {
+            builder.AddSerilog(dispose: true);
+        });
 
-
+        services.ConfigureCliOptions<FirewallOptions>();
+        services.ConfigureCommands();
         services.AddSingleton<FirewallCliService>();
         services.AddTransient<App>();
-    }
-
-    private static void ConfigureLogging()
-    {
-        Log.Logger = new LoggerConfiguration()
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .CreateLogger();
     }
 }

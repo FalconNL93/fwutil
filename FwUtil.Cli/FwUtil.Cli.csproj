@@ -8,24 +8,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\FwUtil.Core\FwUtil.Core.csproj"/>
+        <ProjectReference Include="..\FwUtil.Core\FwUtil.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommandLineParser" Version="2.9.0-preview1"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0-preview.1.22076.8"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0-preview.1.22076.8"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0-preview.1.22076.8"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0-preview.1.22076.8"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0-preview.1.22076.8"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0-preview.1.22076.8"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0-preview.1.22076.8"/>
-        <PackageReference Include="Serilog" Version="2.11.0-dev-01380"/>
-        <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0"/>
-        <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.1-dev-00296"/>
-        <PackageReference Include="Serilog.Sinks.Console" Version="4.0.2-dev-00890"/>
-        <PackageReference Include="Serilog.Sinks.ILogger" Version="1.0.3"/>
-        <PackageReference Include="Wodsoft.Extensions.Logging.Debug" Version="1.1.2"/>
+        <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0-preview.1.22076.8" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0-preview.1.22076.8" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0-preview.1.22076.8" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0-preview.1.22076.8" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0-preview.1.22076.8" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0-preview.1.22076.8" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0-preview.1.22076.8" />
+        <PackageReference Include="Serilog" Version="2.11.0-dev-01380" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.1-dev-00296" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.0.2-dev-00890" />
+        <PackageReference Include="Serilog.Sinks.ILogger" Version="1.0.3" />
+        <PackageReference Include="Wodsoft.Extensions.Logging.Debug" Version="1.1.2" />
     </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ using FwUtil.Core.Models;
 using FwUtil.Core.Services;
 using Microsoft.Extensions.Logging;
 
-namespace FwUtil.Cli.Classes;
+namespace FwUtil.Cli.Services;
 
 public class FirewallCliService : FirewallService
 {
