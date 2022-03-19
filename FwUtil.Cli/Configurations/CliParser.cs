@@ -1,5 +1,6 @@
 ﻿using CommandLine;
-using CommandLine.Text;
+using FwUtil.Cli.Options;
+using FwUtil.Cli.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FwUtil.Cli.Configurations;
@@ -14,33 +15,27 @@ public static class CliParser
             parser.IgnoreUnknownArguments = false;
         });
 
-    public static void ConfigureCliOptions<T>(this IServiceCollection services) where T : class
+    public static void ConfigureVerb(this IServiceCollection serviceCollection)
     {
+        var args = Environment.GetCommandLineArgs().Skip(1);
         try
         {
-            var parserResult = Configuration.ParseArguments<T>(Environment.GetCommandLineArgs())
-                .WithParsed(delegate(T optionClass)
-                {
-                    services.AddSingleton(optionClass);
-                });
-
-            if (parserResult.Tag != ParserResultType.NotParsed) return;
-
-            var builder = SentenceBuilder.Create();
-            var errorMessages = HelpText.RenderParsingErrorsTextAsLines(parserResult, builder.FormatError,
-                builder.FormatMutuallyExclusiveSetErrors, 1);
-
-            Console.WriteLine(
-                $"Error(s) during parsing command line options: {string.Join(Environment.NewLine, errorMessages)}");
-
-            Console.WriteLine(
-                $"Command Line: {Environment.NewLine}{string.Join(Environment.NewLine, Environment.GetCommandLineArgs())}");
-
-            Environment.Exit(1);
+            Parser.Default.ParseArguments<RuleOptions, GlobalOptions>(args)
+                .MapResult(
+                    (GlobalOptions options) => serviceCollection.RegisterGlobal(options),
+                    errs => 1);
         }
         catch (Exception e)
         {
             throw new Exception("Unable to parse command line.", e);
         }
+    }
+
+    private static int RegisterGlobal(this IServiceCollection serviceCollection, GlobalOptions options)
+    {
+        serviceCollection.AddSingleton(options);
+        serviceCollection.AddSingleton<ICommandService, GlobalService>();
+
+        return 0;
     }
 }

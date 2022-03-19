@@ -1,5 +1,5 @@
 ﻿namespace FwUtil.Cli.Options;
 
-internal interface IOptions
+public interface IOptions
 {
 }

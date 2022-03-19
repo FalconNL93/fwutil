@@ -1,6 +1,4 @@
-﻿using FwUtil.Cli.Classes;
-using FwUtil.Cli.Configurations;
-using FwUtil.Cli.Options;
+﻿using FwUtil.Cli.Configurations;
 using FwUtil.Cli.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -9,7 +7,7 @@ namespace FwUtil.Cli;
 
 public static class Program
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
         App? app = null;
         var services = new ServiceCollection();
@@ -39,8 +37,7 @@ public static class Program
             builder.AddSerilog(dispose: true);
         });
 
-        services.ConfigureCliOptions<FirewallOptions>();
-        services.ConfigureCommands();
+        services.ConfigureVerb();
         services.AddSingleton<FirewallCliService>();
         services.AddTransient<App>();
     }

@@ -1,7 +1,7 @@
 ﻿using FwUtil.Core.Models;
 using FwUtil.Core.Services;
 
-namespace FwUtil.Cli.Commands;
+namespace FwUtil.Cli.Commands.Rule;
 
 public class ShowRulesCommand : ICommand
 {
@@ -9,10 +9,7 @@ public class ShowRulesCommand : ICommand
     {
         Console.WriteLine(Heading());
         Console.WriteLine(Line());
-        foreach (var rule in firewallService.Rules())
-        {
-            Console.WriteLine(RuleRow(rule));
-        }
+        foreach (var rule in firewallService.Rules()) Console.WriteLine(RuleRow(rule));
         Console.WriteLine(Line());
         Console.WriteLine(Heading());
     }
@@ -26,7 +23,7 @@ public class ShowRulesCommand : ICommand
     {
         return $"{"Enabled",-10}   {"Name",-10}";
     }
-    
+
     private string Line()
     {
         return "==================================";
