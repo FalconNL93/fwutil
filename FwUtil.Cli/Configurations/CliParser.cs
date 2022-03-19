@@ -20,10 +20,10 @@ public static class CliParser
         var args = Environment.GetCommandLineArgs().Skip(1);
         try
         {
-            Parser.Default.ParseArguments<RuleOptions, GlobalOptions>(args)
+            Parser.Default.ParseArguments<RuleOptions, StateOptions>(args)
                 .MapResult(
-                    (GlobalOptions options) => serviceCollection.RegisterGlobal(options),
-                    errs => 1);
+                    (StateOptions options) => serviceCollection.RegisterStateCommand(options),
+                    _ => 1);
         }
         catch (Exception e)
         {
@@ -31,10 +31,10 @@ public static class CliParser
         }
     }
 
-    private static int RegisterGlobal(this IServiceCollection serviceCollection, GlobalOptions options)
+    private static int RegisterStateCommand(this IServiceCollection serviceCollection, StateOptions options)
     {
         serviceCollection.AddSingleton(options);
-        serviceCollection.AddSingleton<ICommandService, GlobalService>();
+        serviceCollection.AddSingleton<ICommandService, StateService>();
 
         return 0;
     }

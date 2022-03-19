@@ -56,4 +56,14 @@ public class FirewallService
     {
         return Rules().Exists(match);
     }
+    
+    public bool DisableFirewall()
+    {
+        return _repository.DisableFirewall();
+    }
+    
+    public bool EnableFirewall()
+    {
+        return _repository.EnableFirewall();
+    }
 }

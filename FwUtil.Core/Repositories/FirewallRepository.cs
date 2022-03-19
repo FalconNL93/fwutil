@@ -9,6 +9,13 @@ internal class FirewallRepository
     private const string FwInstanceId = "HNetCfg.FwPolicy2";
     private readonly INetFwPolicy2 _firewall;
 
+    private readonly List<NET_FW_PROFILE_TYPE2_> _allProfiles = new()
+    {
+        NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_DOMAIN,
+        NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC,
+        NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE
+    };
+
     public FirewallRepository()
     {
         Type firewallInstance = null;
@@ -41,5 +48,39 @@ internal class FirewallRepository
     public void RemoveRule(NetFwRule2 rule)
     {
         _firewall.Rules.Remove(rule.Name);
+    }
+
+    public bool DisableFirewall()
+    {
+        try
+        {
+            foreach (var profile in _allProfiles)
+            {
+                _firewall.FirewallEnabled[profile] = false;
+            }
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool EnableFirewall()
+    {
+        try
+        {
+            foreach (var profile in _allProfiles)
+            {
+                _firewall.FirewallEnabled[profile] = true;
+            }
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

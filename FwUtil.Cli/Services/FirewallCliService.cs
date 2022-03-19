@@ -37,4 +37,32 @@ public class FirewallCliService : FirewallService
             _logger.LogError("This firewall rule does not exists");
         }
     }
+
+    public new bool DisableService()
+    {
+        try
+        {
+            return DisableFirewall();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Err");
+        }
+
+        return false;
+    }
+
+    public new bool EnableFirewall()
+    {
+        try
+        {
+            return base.EnableFirewall();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Err");
+        }
+
+        return false;
+    }
 }
