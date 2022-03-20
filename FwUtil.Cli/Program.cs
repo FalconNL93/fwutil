@@ -20,7 +20,7 @@ public static class Program
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error while initializing FwUtil:\n{0}", e.Message);
+            Console.WriteLine("FWUtil could not be loaded:\n{0}", e.Message);
             Environment.Exit(1);
         }
 
@@ -37,7 +37,16 @@ public static class Program
             builder.AddSerilog(dispose: true);
         });
 
-        services.ConfigureVerb();
+        try
+        {
+            services.ConfigureCommands();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
         services.AddSingleton<FirewallCliService>();
         services.AddTransient<App>();
     }

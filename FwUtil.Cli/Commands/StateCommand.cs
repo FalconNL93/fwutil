@@ -1,17 +1,18 @@
 ﻿using FwUtil.Cli.Options;
+using FwUtil.Cli.Services;
 using Microsoft.Extensions.Logging;
 
-namespace FwUtil.Cli.Services;
+namespace FwUtil.Cli.Commands;
 
-public class StateService : ICommandService
+public class StateCommand : ICommand
 {
     private readonly StateOptions _options;
     private readonly FirewallCliService _firewallCliService;
     private readonly ILogger<App> _logger;
 
-    public StateService(ILogger<App> logger, StateOptions stateOptions, FirewallCliService firewallCliService)
+    public StateCommand(ILogger<App> logger, StateOptions options, FirewallCliService firewallCliService)
     {
-        _options = stateOptions;
+        _options = options;
         _firewallCliService = firewallCliService;
         _logger = logger;
     }

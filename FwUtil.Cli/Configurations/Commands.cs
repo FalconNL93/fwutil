@@ -1,11 +1,11 @@
 ﻿using CommandLine;
+using FwUtil.Cli.Commands;
 using FwUtil.Cli.Options;
-using FwUtil.Cli.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FwUtil.Cli.Configurations;
 
-public static class CliParser
+public static class Commands
 {
     private static readonly Parser Configuration =
         new(parser =>
@@ -15,14 +15,15 @@ public static class CliParser
             parser.IgnoreUnknownArguments = false;
         });
 
-    public static void ConfigureVerb(this IServiceCollection serviceCollection)
+    public static void ConfigureCommands(this IServiceCollection serviceCollection)
     {
         var args = Environment.GetCommandLineArgs().Skip(1);
         try
         {
-            Parser.Default.ParseArguments<RuleOptions, StateOptions>(args)
+            Configuration.ParseArguments<RuleOptions, StateOptions>(args)
                 .MapResult(
                     (StateOptions options) => serviceCollection.RegisterStateCommand(options),
+                    (RuleOptions options) => serviceCollection.RegisterRuleCommand(options),
                     _ => 1);
         }
         catch (Exception e)
@@ -34,7 +35,15 @@ public static class CliParser
     private static int RegisterStateCommand(this IServiceCollection serviceCollection, StateOptions options)
     {
         serviceCollection.AddSingleton(options);
-        serviceCollection.AddSingleton<ICommandService, StateService>();
+        serviceCollection.AddSingleton<ICommand, StateCommand>();
+
+        return 0;
+    }
+
+    private static int RegisterRuleCommand(this IServiceCollection serviceCollection, RuleOptions options)
+    {
+        serviceCollection.AddSingleton(options);
+        serviceCollection.AddSingleton<ICommand, RuleCommand>();
 
         return 0;
     }

@@ -2,8 +2,8 @@
 
 public class HelpCommand : ICommand
 {
-    public void Execute()
+    public void Handle()
     {
-        Console.WriteLine("Jarp");
+        throw new NotImplementedException();
     }
 }

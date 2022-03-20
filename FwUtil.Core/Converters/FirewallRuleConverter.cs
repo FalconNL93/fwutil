@@ -38,7 +38,14 @@ public static class FirewallRuleConverter
                 FirewallRule.Actions.MaximumTraffic => NET_FW_ACTION_.NET_FW_ACTION_MAX,
                 _ => throw new ArgumentOutOfRangeException()
             },
-            Profiles = (int) NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_ALL
+            Profiles = firewallRule.InterfaceType switch
+            {
+                FirewallRule.InterfaceTypes.Any => (int) NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_ALL,
+                FirewallRule.InterfaceTypes.Domain => (int) NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_DOMAIN,
+                FirewallRule.InterfaceTypes.Private => (int) NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE,
+                FirewallRule.InterfaceTypes.Public => (int) NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC,
+                _ => throw new ArgumentOutOfRangeException()
+            },
         };
 
         return netFwRule2;

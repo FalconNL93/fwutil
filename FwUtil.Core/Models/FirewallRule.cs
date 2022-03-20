@@ -17,7 +17,10 @@ public class FirewallRule
 
     public enum InterfaceTypes
     {
-        Any
+        Any,
+        Domain,
+        Public,
+        Private
     }
 
     public enum Protocols

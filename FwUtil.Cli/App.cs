@@ -1,26 +1,22 @@
-﻿using FwUtil.Cli.Services;
+﻿using FwUtil.Cli.Commands;
 using Microsoft.Extensions.Logging;
 
 namespace FwUtil.Cli;
 
 public class App
 {
-    private readonly ICommandService _commandService;
-    private readonly FirewallCliService _firewallCliService;
+    private readonly ICommand _command;
     private readonly ILogger<App> _logger;
 
-    public App(FirewallCliService firewallCliService,
-        ILogger<App> logger,
-        ICommandService commandService)
+    public App(ILogger<App> logger, ICommand command)
     {
-        _firewallCliService = firewallCliService;
         _logger = logger;
-        _commandService = commandService;
+        _command = command;
     }
 
     public void Run()
     {
         _logger.LogInformation("Firewall CLI Utility initialized");
-        _commandService.Handle();
+        _command.Handle();
     }
 }
