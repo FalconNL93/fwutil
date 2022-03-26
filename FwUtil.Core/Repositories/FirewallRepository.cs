@@ -7,7 +7,6 @@ namespace FwUtil.Core.Repositories;
 internal class FirewallRepository
 {
     private const string FwInstanceId = "HNetCfg.FwPolicy2";
-    private readonly INetFwPolicy2 _firewall;
 
     private readonly List<NET_FW_PROFILE_TYPE2_> _allProfiles = new()
     {
@@ -15,6 +14,8 @@ internal class FirewallRepository
         NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC,
         NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE
     };
+
+    private readonly INetFwPolicy2 _firewall;
 
     public FirewallRepository()
     {
@@ -54,10 +55,7 @@ internal class FirewallRepository
     {
         try
         {
-            foreach (var profile in _allProfiles)
-            {
-                _firewall.FirewallEnabled[profile] = false;
-            }
+            foreach (var profile in _allProfiles) _firewall.FirewallEnabled[profile] = false;
         }
         catch (Exception e)
         {
@@ -71,10 +69,7 @@ internal class FirewallRepository
     {
         try
         {
-            foreach (var profile in _allProfiles)
-            {
-                _firewall.FirewallEnabled[profile] = true;
-            }
+            foreach (var profile in _allProfiles) _firewall.FirewallEnabled[profile] = true;
         }
         catch (Exception e)
         {

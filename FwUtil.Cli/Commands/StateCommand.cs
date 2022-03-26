@@ -6,9 +6,9 @@ namespace FwUtil.Cli.Commands;
 
 public class StateCommand : ICommand
 {
-    private readonly StateOptions _options;
     private readonly FirewallCliService _firewallCliService;
     private readonly ILogger<App> _logger;
+    private readonly StateOptions _options;
 
     public StateCommand(ILogger<App> logger, StateOptions options, FirewallCliService firewallCliService)
     {
@@ -20,13 +20,8 @@ public class StateCommand : ICommand
     public void Handle()
     {
         if (_options.Enable)
-        {
             EnableFirewall();
-        }
-        else if (_options.Disable)
-        {
-            DisableFirewall();
-        }
+        else if (_options.Disable) DisableFirewall();
     }
 
     private void DisableFirewall()

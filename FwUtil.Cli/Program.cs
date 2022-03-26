@@ -20,7 +20,7 @@ public static class Program
         }
         catch (Exception e)
         {
-            Console.WriteLine("FWUtil could not be loaded:\n{0}", e.Message);
+            Console.WriteLine("FWUtil could not be loaded:\n{0}", e);
             Environment.Exit(1);
         }
 

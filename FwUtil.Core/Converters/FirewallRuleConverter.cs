@@ -45,7 +45,7 @@ public static class FirewallRuleConverter
                 FirewallRule.InterfaceTypes.Private => (int) NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PRIVATE,
                 FirewallRule.InterfaceTypes.Public => (int) NET_FW_PROFILE_TYPE2_.NET_FW_PROFILE2_PUBLIC,
                 _ => throw new ArgumentOutOfRangeException()
-            },
+            }
         };
 
         return netFwRule2;

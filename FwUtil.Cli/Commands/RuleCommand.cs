@@ -8,9 +8,9 @@ namespace FwUtil.Cli.Commands;
 
 public class RuleCommand : ICommand
 {
-    private readonly RuleOptions _options;
     private readonly FirewallCliService _firewallCliService;
     private readonly ILogger<App> _logger;
+    private readonly RuleOptions _options;
 
     public RuleCommand(ILogger<App> logger, RuleOptions options, FirewallCliService firewallCliService)
     {
@@ -22,13 +22,8 @@ public class RuleCommand : ICommand
     public void Handle()
     {
         if (_options.ShowAll)
-        {
             HandleShowAll();
-        }
-        else if (_options.Action != null)
-        {
-            HandleAction();
-        }
+        else if (_options.Action != null) HandleAction();
     }
 
     private void HandleShowAll()
@@ -62,7 +57,7 @@ public class RuleCommand : ICommand
             _ => FirewallRule.Protocols.Any
         };
 
-        
+
         _firewallCliService.AddRule(new FirewallRule
         {
             Enabled = false,

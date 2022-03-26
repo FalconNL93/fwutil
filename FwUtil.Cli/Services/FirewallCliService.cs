@@ -38,7 +38,7 @@ public class FirewallCliService : FirewallService
         }
     }
 
-    public new bool DisableService()
+    public bool DisableService()
     {
         try
         {

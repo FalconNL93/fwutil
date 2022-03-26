@@ -20,11 +20,18 @@ public static class Commands
         var args = Environment.GetCommandLineArgs().Skip(1);
         try
         {
-            Configuration.ParseArguments<RuleOptions, StateOptions>(args)
+            Configuration.ParseArguments<RuleOptions, StateOptions, LoadOptions, SaveOptions>(args)
                 .MapResult(
                     (StateOptions options) => serviceCollection.RegisterStateCommand(options),
                     (RuleOptions options) => serviceCollection.RegisterRuleCommand(options),
-                    _ => 1);
+                    (LoadOptions options) => serviceCollection.RegisterLoadCommand(options),
+                    (SaveOptions options) => serviceCollection.RegisterSaveCommand(options),
+                    _ =>
+                    {
+                        foreach (var error in _) Console.WriteLine(error);
+
+                        return 0;
+                    });
         }
         catch (Exception e)
         {
@@ -44,6 +51,22 @@ public static class Commands
     {
         serviceCollection.AddSingleton(options);
         serviceCollection.AddSingleton<ICommand, RuleCommand>();
+
+        return 0;
+    }
+
+    private static int RegisterLoadCommand(this IServiceCollection serviceCollection, LoadOptions options)
+    {
+        serviceCollection.AddSingleton(options);
+        serviceCollection.AddSingleton<ICommand, LoadCommand>();
+
+        return 0;
+    }
+    
+    private static int RegisterSaveCommand(this IServiceCollection serviceCollection, SaveOptions options)
+    {
+        serviceCollection.AddSingleton(options);
+        serviceCollection.AddSingleton<ICommand, SaveCommand>();
 
         return 0;
     }
