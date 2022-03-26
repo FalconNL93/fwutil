@@ -1,6 +1,7 @@
 ﻿using FwUtil.Cli.Helpers;
 using FwUtil.Cli.Options;
 using FwUtil.Cli.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FwUtil.Cli.Commands;
@@ -37,4 +38,15 @@ public class LoadCommand : ICommand
             _logger.LogError(e, "Unable to read firewall state from file");
         }
     }
+}
+
+public static class LoadServiceCollection
+{
+    public static int RegisterLoadCommand(this IServiceCollection serviceCollection, LoadOptions options)
+    {
+        serviceCollection.AddSingleton(options);
+        serviceCollection.AddSingleton<ICommand, LoadCommand>();
+
+        return 0;
+    }   
 }

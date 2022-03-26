@@ -1,5 +1,6 @@
 ﻿using FwUtil.Cli.Options;
 using FwUtil.Cli.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FwUtil.Cli.Commands;
@@ -51,4 +52,15 @@ public class StateCommand : ICommand
             throw;
         }
     }
+}
+
+public static class StateServiceCollection
+{
+    public static int RegisterStateCommand(this IServiceCollection serviceCollection, StateOptions options)
+    {
+        serviceCollection.AddSingleton(options);
+        serviceCollection.AddSingleton<ICommand, StateCommand>();
+
+        return 0;
+    }   
 }

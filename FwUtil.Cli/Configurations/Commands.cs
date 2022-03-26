@@ -38,36 +38,4 @@ public static class Commands
             throw new Exception("Unable to parse command line.", e);
         }
     }
-
-    private static int RegisterStateCommand(this IServiceCollection serviceCollection, StateOptions options)
-    {
-        serviceCollection.AddSingleton(options);
-        serviceCollection.AddSingleton<ICommand, StateCommand>();
-
-        return 0;
-    }
-
-    private static int RegisterRuleCommand(this IServiceCollection serviceCollection, RuleOptions options)
-    {
-        serviceCollection.AddSingleton(options);
-        serviceCollection.AddSingleton<ICommand, RuleCommand>();
-
-        return 0;
-    }
-
-    private static int RegisterLoadCommand(this IServiceCollection serviceCollection, LoadOptions options)
-    {
-        serviceCollection.AddSingleton(options);
-        serviceCollection.AddSingleton<ICommand, LoadCommand>();
-
-        return 0;
-    }
-    
-    private static int RegisterSaveCommand(this IServiceCollection serviceCollection, SaveOptions options)
-    {
-        serviceCollection.AddSingleton(options);
-        serviceCollection.AddSingleton<ICommand, SaveCommand>();
-
-        return 0;
-    }
 }

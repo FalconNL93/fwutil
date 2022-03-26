@@ -2,6 +2,7 @@
 using FwUtil.Cli.Options;
 using FwUtil.Cli.Services;
 using FwUtil.Core.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FwUtil.Cli.Commands;
@@ -72,4 +73,15 @@ public class RuleCommand : ICommand
     {
         return $"{rule.Enabled,-10} - {rule.DisplayName,-20}";
     }
+}
+
+public static class RuleServiceCollection
+{
+    public static int RegisterRuleCommand(this IServiceCollection serviceCollection, RuleOptions options)
+    {
+        serviceCollection.AddSingleton(options);
+        serviceCollection.AddSingleton<ICommand, RuleCommand>();
+
+        return 0;
+    }   
 }
