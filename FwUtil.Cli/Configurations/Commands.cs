@@ -9,12 +9,15 @@ namespace FwUtil.Cli.Configurations;
 
 public static class Commands
 {
-    private static readonly Parser Configuration =
+    private static readonly Parser CliConfiguration =
         new(parser =>
         {
             parser.CaseSensitive = false;
             parser.HelpWriter = TextWriter.Null;
             parser.IgnoreUnknownArguments = false;
+            parser.EnableDashDash = true;
+            parser.AutoHelp = false;
+            parser.AutoVersion = false;
         });
 
     public static void ConfigureCommands(this IServiceCollection serviceCollection)
@@ -22,13 +25,14 @@ public static class Commands
         var args = Environment.GetCommandLineArgs().Skip(1);
         try
         {
-            Configuration.ParseArguments<LoadOptions, RuleOptions, SaveOptions, StateOptions, int>(args)
-                .MapResult(
-                    (LoadOptions options) => serviceCollection.RegisterCommand<LoadOptions, LoadCommand>(options),
-                    (RuleOptions options) => serviceCollection.RegisterCommand<RuleOptions, RuleCommand>(options),
-                    (SaveOptions options) => serviceCollection.RegisterCommand<SaveOptions, SaveCommand>(options),
-                    (StateOptions options) => serviceCollection.RegisterCommand<StateOptions, StateCommand>(options),
-                    CliParserHelper.HandleCliErrors);
+            var loadCli =
+                CliConfiguration.ParseArguments<LoadOptions, RuleOptions, SaveOptions, StateOptions, int>(args);
+            loadCli.MapResult(
+                (LoadOptions options) => serviceCollection.RegisterCommand<LoadOptions, LoadCommand>(options),
+                (RuleOptions options) => serviceCollection.RegisterCommand<RuleOptions, RuleCommand>(options),
+                (SaveOptions options) => serviceCollection.RegisterCommand<SaveOptions, SaveCommand>(options),
+                (StateOptions options) => serviceCollection.RegisterCommand<StateOptions, StateCommand>(options),
+                CliParserHelper.HandleCliErrors);
         }
         catch (Exception e)
         {

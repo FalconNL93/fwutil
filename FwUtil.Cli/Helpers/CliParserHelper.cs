@@ -4,20 +4,18 @@ namespace FwUtil.Cli.Helpers;
 
 public static class CliParserHelper
 {
+    private static readonly Dictionary<Type, string> TranslationList = new()
+    {
+        {typeof(NoVerbSelectedError), "Missing parameter"}
+    };
+
     public static int HandleCliErrors(IEnumerable<Error> errors)
     {
-        var errorList = errors.ToList();
-
-        var translationList = new Dictionary<Type, string>
-        {
-            {typeof(NoVerbSelectedError), "Missing verb"}
-        };
-
         Console.WriteLine("Error: Could not load FW Utility Cli");
-        errorList.ForEach(error =>
+        errors.ToList().ForEach(error =>
         {
-            Console.WriteLine(translationList.ContainsKey(error.GetType())
-                ? translationList.FirstOrDefault(x => x.Key == error.GetType()).Value
+            Console.WriteLine(TranslationList.ContainsKey(error.GetType())
+                ? TranslationList.FirstOrDefault(x => x.Key == error.GetType()).Value
                 : error.ToString());
         });
 
