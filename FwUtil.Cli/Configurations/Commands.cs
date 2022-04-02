@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using FwUtil.Cli.Commands;
+using FwUtil.Cli.Extensions;
 using FwUtil.Cli.Options;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,22 +21,38 @@ public static class Commands
         var args = Environment.GetCommandLineArgs().Skip(1);
         try
         {
-            Configuration.ParseArguments<RuleOptions, StateOptions, LoadOptions, SaveOptions>(args)
+            Configuration.ParseArguments<LoadOptions, RuleOptions, SaveOptions, StateOptions, int>(args)
                 .MapResult(
-                    (StateOptions options) => serviceCollection.RegisterStateCommand(options),
-                    (RuleOptions options) => serviceCollection.RegisterRuleCommand(options),
-                    (LoadOptions options) => serviceCollection.RegisterLoadCommand(options),
-                    (SaveOptions options) => serviceCollection.RegisterSaveCommand(options),
-                    _ =>
-                    {
-                        foreach (var error in _) Console.WriteLine(error);
-
-                        return 0;
-                    });
+                    (LoadOptions options) => serviceCollection.RegisterCommand<LoadOptions, LoadCommand>(options),
+                    (RuleOptions options) => serviceCollection.RegisterCommand<RuleOptions, RuleCommand>(options),
+                    (SaveOptions options) => serviceCollection.RegisterCommand<SaveOptions, SaveCommand>(options),
+                    (StateOptions options) => serviceCollection.RegisterCommand<StateOptions, StateCommand>(options),
+                    HandleCliErrors);
         }
         catch (Exception e)
         {
             throw new Exception("Unable to parse command line.", e);
         }
+    }
+
+    private static int HandleCliErrors(IEnumerable<Error> errors)
+    {
+        var errorList = errors.ToList();
+
+        var translationList = new Dictionary<Type, string>
+        {
+            {typeof(NoVerbSelectedError), "Missing verb"}
+        };
+
+        Console.WriteLine("Error: Could not load FW Utility Cli");
+        errorList.ForEach(error =>
+        {
+            Console.WriteLine(translationList.ContainsKey(error.GetType())
+                ? translationList.FirstOrDefault(x => x.Key == error.GetType()).Value
+                : error.ToString());
+        });
+
+        Environment.Exit(1);
+        return 1;
     }
 }

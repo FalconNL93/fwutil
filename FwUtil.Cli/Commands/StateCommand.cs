@@ -8,10 +8,10 @@ namespace FwUtil.Cli.Commands;
 public class StateCommand : ICommand
 {
     private readonly FirewallCliService _firewallCliService;
-    private readonly ILogger<App> _logger;
+    private readonly ILogger<StateCommand> _logger;
     private readonly StateOptions _options;
 
-    public StateCommand(ILogger<App> logger, StateOptions options, FirewallCliService firewallCliService)
+    public StateCommand(ILogger<StateCommand> logger, StateOptions options, FirewallCliService firewallCliService)
     {
         _options = options;
         _firewallCliService = firewallCliService;
@@ -52,15 +52,4 @@ public class StateCommand : ICommand
             throw;
         }
     }
-}
-
-public static class StateServiceCollection
-{
-    public static int RegisterStateCommand(this IServiceCollection serviceCollection, StateOptions options)
-    {
-        serviceCollection.AddSingleton(options);
-        serviceCollection.AddSingleton<ICommand, StateCommand>();
-
-        return 0;
-    }   
 }

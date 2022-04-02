@@ -10,10 +10,10 @@ namespace FwUtil.Cli.Commands;
 public class RuleCommand : ICommand
 {
     private readonly FirewallCliService _firewallCliService;
-    private readonly ILogger<App> _logger;
+    private readonly ILogger<RuleCommand> _logger;
     private readonly RuleOptions _options;
 
-    public RuleCommand(ILogger<App> logger, RuleOptions options, FirewallCliService firewallCliService)
+    public RuleCommand(ILogger<RuleCommand> logger, RuleOptions options, FirewallCliService firewallCliService)
     {
         _options = options;
         _firewallCliService = firewallCliService;

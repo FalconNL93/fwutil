@@ -2,7 +2,7 @@
 
 namespace FwUtil.Cli.Models;
 
-public class JsonModel
+public class FirewallModel
 {
     public string Name { get; set; }
     public DateTime Date { get; set; }

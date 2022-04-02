@@ -7,6 +7,9 @@ public class LoadOptions
 {
     private string _direction;
     private string _protocol;
+    
+    [Option('f', "file", HelpText = "Filename", Default = "rules.json")]
+    public string File { get; set; }
 
     [Option('d', "direction", HelpText = "(Out)bound or (In)bound")]
     public string Direction

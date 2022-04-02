@@ -1,6 +1,9 @@
-﻿using FwUtil.Cli.Helpers;
+﻿using FwUtil.Cli.Extensions;
+using FwUtil.Cli.Helpers;
+using FwUtil.Cli.Models;
 using FwUtil.Cli.Options;
 using FwUtil.Cli.Services;
+using FwUtil.Core.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -9,10 +12,12 @@ namespace FwUtil.Cli.Commands;
 public class LoadCommand : ICommand
 {
     private readonly FirewallCliService _firewallCliService;
-    private readonly ILogger<App> _logger;
+    private readonly ILogger<LoadCommand> _logger;
     private readonly LoadOptions _options;
+    private FirewallModel _firewallModel = new();
+    private List<FirewallRule> _firewallRules = null;
 
-    public LoadCommand(ILogger<App> logger, LoadOptions options, FirewallCliService firewallCliService)
+    public LoadCommand(ILogger<LoadCommand> logger, LoadOptions options, FirewallCliService firewallCliService)
     {
         _options = options;
         _firewallCliService = firewallCliService;
@@ -28,14 +33,17 @@ public class LoadCommand : ICommand
     {
         try
         {
-            var jsonModel = JsonHelper.FromFile("rules.json");
-            var rules = jsonModel.Rules.ToList();
+            _firewallModel = FirewallHelper.FromFile(_options.File);
+            _firewallRules = _firewallModel.Rules.Where(x => x.Protocol == FirewallRule.Protocols.Tcp).ToList();
 
-            _logger.LogInformation("Firewall state fetched from file with {Rules} rules", rules.Count);
+            _logger.LogInformation("Firewall state read from {File} with {Rules} rules", _options.File,
+                _firewallModel.Rules.Count);
+            
+            _logger.LogFirewallRulesCount(_firewallRules);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Unable to read firewall state from file");
+            _logger.LogError(e, "Unable to read firewall state from {File}: {Error}", _options.File, e.Message);
         }
     }
 }
@@ -48,5 +56,5 @@ public static class LoadServiceCollection
         serviceCollection.AddSingleton<ICommand, LoadCommand>();
 
         return 0;
-    }   
+    }
 }
