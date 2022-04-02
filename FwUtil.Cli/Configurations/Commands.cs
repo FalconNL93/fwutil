@@ -1,6 +1,7 @@
 ﻿using CommandLine;
 using FwUtil.Cli.Commands;
 using FwUtil.Cli.Extensions;
+using FwUtil.Cli.Helpers;
 using FwUtil.Cli.Options;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,32 +28,11 @@ public static class Commands
                     (RuleOptions options) => serviceCollection.RegisterCommand<RuleOptions, RuleCommand>(options),
                     (SaveOptions options) => serviceCollection.RegisterCommand<SaveOptions, SaveCommand>(options),
                     (StateOptions options) => serviceCollection.RegisterCommand<StateOptions, StateCommand>(options),
-                    HandleCliErrors);
+                    CliParserHelper.HandleCliErrors);
         }
         catch (Exception e)
         {
             throw new Exception("Unable to parse command line.", e);
         }
-    }
-
-    private static int HandleCliErrors(IEnumerable<Error> errors)
-    {
-        var errorList = errors.ToList();
-
-        var translationList = new Dictionary<Type, string>
-        {
-            {typeof(NoVerbSelectedError), "Missing verb"}
-        };
-
-        Console.WriteLine("Error: Could not load FW Utility Cli");
-        errorList.ForEach(error =>
-        {
-            Console.WriteLine(translationList.ContainsKey(error.GetType())
-                ? translationList.FirstOrDefault(x => x.Key == error.GetType()).Value
-                : error.ToString());
-        });
-
-        Environment.Exit(1);
-        return 1;
     }
 }
