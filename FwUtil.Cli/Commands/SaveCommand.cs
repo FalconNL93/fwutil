@@ -3,7 +3,6 @@ using FwUtil.Cli.Helpers;
 using FwUtil.Cli.Models;
 using FwUtil.Cli.Options;
 using FwUtil.Cli.Services;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FwUtil.Cli.Commands;
@@ -23,10 +22,10 @@ public class SaveCommand : ICommand
 
     public void Handle()
     {
-        WriteJson();
+        Save();
     }
 
-    private void WriteJson()
+    private void Save()
     {
         var firewallModel = new FirewallModel
         {
@@ -48,16 +47,5 @@ public class SaveCommand : ICommand
         {
             _logger.LogError(e, "Unable to write firewall state to {File}: {Error}", _options.File, e.Message);
         }
-    }
-}
-
-public static class SaveServiceCollection
-{
-    public static int RegisterSaveCommand(this IServiceCollection serviceCollection, SaveOptions options)
-    {
-        serviceCollection.AddSingleton(options);
-        serviceCollection.AddSingleton<ICommand, SaveCommand>();
-
-        return 0;
     }
 }

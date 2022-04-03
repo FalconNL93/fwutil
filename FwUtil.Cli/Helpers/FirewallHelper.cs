@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using FwUtil.Cli.Models;
-using FwUtil.Core.Models;
 
 namespace FwUtil.Cli.Helpers;
 

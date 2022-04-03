@@ -19,7 +19,7 @@ internal class FirewallRepository
 
     public FirewallRepository()
     {
-        Type firewallInstance = null;
+        Type firewallInstance;
 
         try
         {
@@ -43,7 +43,15 @@ internal class FirewallRepository
 
     public void AddRule(NetFwRule2 rule)
     {
-        _firewall.Rules.Add(rule);
+        try
+        {
+            _firewall.Rules.Add(rule);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(rule);
+            throw;
+        }
     }
 
     public void RemoveRule(NetFwRule2 rule)

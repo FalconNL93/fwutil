@@ -7,22 +7,27 @@ namespace FwUtil.Cli.Services;
 
 public class FirewallCliService : FirewallService
 {
-    private readonly ILogger<App> _logger;
+    private readonly ILogger<FirewallCliService> _logger;
 
-    public FirewallCliService(ILogger<App> logger)
+    public FirewallCliService(ILogger<FirewallCliService> logger)
     {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _logger = logger;
     }
 
-    public new void AddRule(FirewallRule rule)
+    public new bool AddRule(FirewallRule rule)
     {
         try
         {
+            _logger.LogInformation("Rule created: [{Direction}] {DisplayName} - {Protocol} {Ports}",
+                rule.Direction, rule.DisplayName, rule.Protocol, rule.LocalPorts);
+            
             base.AddRule(rule);
+            return true;
         }
         catch (FirewallRuleAlreadyExists)
         {
-            _logger.LogError("This firewall rule already exists");
+            _logger.LogError("Firewall rule {DisplayName} already exists", rule.DisplayName);
+            return false;
         }
     }
 

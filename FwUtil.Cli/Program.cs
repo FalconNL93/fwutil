@@ -1,5 +1,4 @@
-﻿using FwUtil.Cli.Commands;
-using FwUtil.Cli.Configurations;
+﻿using FwUtil.Cli.Configurations;
 using FwUtil.Cli.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;

@@ -7,7 +7,7 @@ public class LoadOptions
 {
     private string _direction;
     private string _protocol;
-    
+
     [Option('f', "file", HelpText = "Filename", Default = "rules.json")]
     public string File { get; set; }
 
@@ -24,4 +24,7 @@ public class LoadOptions
         get => _protocol;
         set => _protocol = value.ToLower();
     }
+
+    [Option('a', "apply", Default = false, HelpText = "Apply loaded firewall rules")]
+    public bool Apply { get; set; }
 }

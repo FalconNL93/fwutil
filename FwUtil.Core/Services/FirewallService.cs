@@ -35,7 +35,7 @@ public class FirewallService
 
     public void AddRule(FirewallRule firewallRule)
     {
-        if (Rules().Exists(r => r.DisplayName == firewallRule.DisplayName)) throw new FirewallRuleAlreadyExists();
+        //if (Rules().Exists(r => r.DisplayName == firewallRule.DisplayName)) throw new FirewallRuleAlreadyExists();
 
         _repository.AddRule(FirewallRuleConverter.ConvertTo(firewallRule));
     }

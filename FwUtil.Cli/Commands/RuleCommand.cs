@@ -2,7 +2,6 @@
 using FwUtil.Cli.Options;
 using FwUtil.Cli.Services;
 using FwUtil.Core.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FwUtil.Cli.Commands;
@@ -23,8 +22,12 @@ public class RuleCommand : ICommand
     public void Handle()
     {
         if (_options.ShowAll)
-            HandleShowAll();
-        else if (_options.Action != null) HandleAction();
+        {
+        }
+        else
+        {
+            HandleAction();
+        }
     }
 
     private void HandleShowAll()
@@ -59,29 +62,27 @@ public class RuleCommand : ICommand
         };
 
 
-        _firewallCliService.AddRule(new FirewallRule
+        try
         {
-            Enabled = false,
-            Action = actionParam,
-            Direction = directionParam,
-            Protocol = protocolParam,
-            InterfaceType = FirewallRule.InterfaceTypes.Public
-        });
+            _firewallCliService.AddRule(new FirewallRule
+            {
+                DisplayName = "test",
+                Enabled = false,
+                Action = actionParam,
+                Direction = directionParam,
+                Protocol = protocolParam,
+                InterfaceType = FirewallRule.InterfaceTypes.Public
+            });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     private string RuleRow(FirewallRule rule)
     {
         return $"{rule.Enabled,-10} - {rule.DisplayName,-20}";
     }
-}
-
-public static class RuleServiceCollection
-{
-    public static int RegisterRuleCommand(this IServiceCollection serviceCollection, RuleOptions options)
-    {
-        serviceCollection.AddSingleton(options);
-        serviceCollection.AddSingleton<ICommand, RuleCommand>();
-
-        return 0;
-    }   
 }

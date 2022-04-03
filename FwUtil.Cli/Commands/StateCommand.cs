@@ -1,6 +1,5 @@
 ﻿using FwUtil.Cli.Options;
 using FwUtil.Cli.Services;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FwUtil.Cli.Commands;

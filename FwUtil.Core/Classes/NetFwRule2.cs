@@ -14,13 +14,13 @@ public class NetFwRule2 : INetFwRule2
 
     public int Protocol { get; set; }
 
-    public string LocalPorts { get; set; }
+    public string LocalPorts { get; set; } = "";
 
-    public string RemotePorts { get; set; }
+    public string RemotePorts { get; set; } = "";
 
-    public string LocalAddresses { get; set; }
+    public string LocalAddresses { get; set; } = "";
 
-    public string RemoteAddresses { get; set; }
+    public string RemoteAddresses { get; set; } = "";
 
     public string IcmpTypesAndCodes { get; set; }
 
