@@ -26,7 +26,9 @@ internal class FirewallRepository
             firewallInstance = Type.GetTypeFromProgID(FwInstanceId);
 
             if (firewallInstance == null)
+            {
                 throw new NetFwException($"Instance {FwInstanceId} could not be initialized");
+            }
         }
         catch (Exception e)
         {
@@ -63,7 +65,10 @@ internal class FirewallRepository
     {
         try
         {
-            foreach (var profile in _allProfiles) _firewall.FirewallEnabled[profile] = false;
+            foreach (var profile in _allProfiles)
+            {
+                _firewall.FirewallEnabled[profile] = false;
+            }
         }
         catch (Exception e)
         {
@@ -77,7 +82,10 @@ internal class FirewallRepository
     {
         try
         {
-            foreach (var profile in _allProfiles) _firewall.FirewallEnabled[profile] = true;
+            foreach (var profile in _allProfiles)
+            {
+                _firewall.FirewallEnabled[profile] = true;
+            }
         }
         catch (Exception e)
         {

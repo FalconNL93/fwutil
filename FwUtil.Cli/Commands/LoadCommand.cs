@@ -32,8 +32,11 @@ public class LoadCommand : ICommand
             {
                 var addRuleResult = _firewallCliService.AddRule(rule);
 
-                if (!addRuleResult) return;
-                
+                if (!addRuleResult)
+                {
+                    return;
+                }
+
                 _logger.LogInformation("Rule created: [{Direction}] {DisplayName} - {Protocol} {Ports}",
                     rule.Direction, rule.DisplayName, rule.Protocol, rule.LocalPorts);
             });

@@ -9,7 +9,7 @@ public static class TestRuleOne
         Enabled = true,
         DisplayName = "FWUtil: Block Port 80 outgoing",
         Description = "Blocks any outgoing traffic to port 80",
-        RemotePorts = new []{"80"},
+        RemotePorts = new[] {"80"},
         Action = FirewallRule.Actions.Block,
         Direction = FirewallRule.Directions.Outbound,
         Protocol = FirewallRule.Protocols.Tcp,

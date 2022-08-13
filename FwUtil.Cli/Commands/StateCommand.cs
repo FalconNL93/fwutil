@@ -20,8 +20,13 @@ public class StateCommand : ICommand
     public void Handle()
     {
         if (_options.Enable)
+        {
             EnableFirewall();
-        else if (_options.Disable) DisableFirewall();
+        }
+        else if (_options.Disable)
+        {
+            DisableFirewall();
+        }
     }
 
     private void DisableFirewall()

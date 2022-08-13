@@ -9,7 +9,7 @@ public static class Logging
     {
         Log.Logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
-            .WriteTo.File($"{typeof(Program).Assembly.GetName().Name}.log", LogEventLevel.Fatal)
+            .WriteTo.File($"{typeof(Program).Assembly.GetName().Name}.log", LogEventLevel.Error)
             .WriteTo.Console()
             .CreateLogger();
     }

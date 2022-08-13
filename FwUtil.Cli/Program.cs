@@ -1,4 +1,5 @@
 ﻿using FwUtil.Cli.Configurations;
+using FwUtil.Cli.Helpers;
 using FwUtil.Cli.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -8,6 +9,17 @@ namespace FwUtil.Cli;
 public static class Program
 {
     public static void Main()
+    {
+        if (!AppHelper.IsAdministrator())
+        {
+            Console.Error.WriteLine("Error: You must run this application as Administrator");
+            Environment.Exit(1);
+        }
+
+        Boot();
+    }
+
+    private static void Boot()
     {
         App? app = null;
         var services = new ServiceCollection();
@@ -24,7 +36,10 @@ public static class Program
             Environment.Exit(1);
         }
 
-        if (app == null) throw new Exception("Could not resolve app");
+        if (app == null)
+        {
+            throw new Exception("Could not resolve app");
+        }
 
         app.Run();
     }

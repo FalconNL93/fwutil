@@ -20,7 +20,7 @@ public class FirewallCliService : FirewallService
         {
             _logger.LogInformation("Rule created: [{Direction}] {DisplayName} - {Protocol} {Ports}",
                 rule.Direction, rule.DisplayName, rule.Protocol, rule.LocalPorts);
-            
+
             base.AddRule(rule);
             return true;
         }

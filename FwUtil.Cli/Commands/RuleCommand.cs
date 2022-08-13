@@ -32,7 +32,10 @@ public class RuleCommand : ICommand
 
     private void HandleShowAll()
     {
-        foreach (var rule in _firewallCliService.Rules()) Console.WriteLine(ConsoleOutput.RuleOutput(rule));
+        foreach (var rule in _firewallCliService.Rules())
+        {
+            Console.WriteLine(ConsoleOutput.RuleOutput(rule));
+        }
     }
 
     private void HandleAction()

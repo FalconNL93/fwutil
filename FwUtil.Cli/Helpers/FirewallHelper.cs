@@ -7,7 +7,10 @@ public static class FirewallHelper
 {
     public static FirewallModel FromFile(string file)
     {
-        if (!File.Exists(file)) throw new Exception("Requested JSON file does not exist");
+        if (!File.Exists(file))
+        {
+            throw new Exception("Requested JSON file does not exist");
+        }
 
         return JsonSerializer.Deserialize<FirewallModel>(File.ReadAllText(file)) ?? new FirewallModel();
     }

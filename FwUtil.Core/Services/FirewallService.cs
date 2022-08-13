@@ -42,7 +42,10 @@ public class FirewallService
 
     public void RemoveRule(FirewallRule firewallRule)
     {
-        if (!Rules().Exists(r => r.DisplayName == firewallRule.DisplayName)) throw new FirewallRuleNotFoundException();
+        if (!Rules().Exists(r => r.DisplayName == firewallRule.DisplayName))
+        {
+            throw new FirewallRuleNotFoundException();
+        }
 
         _repository.RemoveRule(FirewallRuleConverter.ConvertTo(firewallRule));
     }
